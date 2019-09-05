@@ -12,6 +12,8 @@ class AnimalsTableViewController: UITableViewController {
 
     
     let apiController = APIController()
+    var animalNames: [String] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,19 +31,41 @@ class AnimalsTableViewController: UITableViewController {
         performSegue(withIdentifier: "LoginViewModalSegue", sender: self)
              }
     }
-
+    
+    
+    @IBAction func getAnimals(_ sender: Any) {
+        apiController.getAllAnimalNames { (result) in
+            do {
+                let animalNames = try result.get()
+                self.animalNames = animalNames
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            } catch {
+                NSLog("Error getting animal name: \(error)")
+                
+            }
+        }
+        
+    }
+    
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return animalNames.count
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AnimalCell", for: indexPath)
+        
+        cell.textLabel?.text = animalNames[indexPath.row]
+        return cell
+    }
+    
     
     // MARK: - Navigation
 
@@ -50,6 +74,13 @@ class AnimalsTableViewController: UITableViewController {
         if segue.identifier == "LoginViewModalSegue" {
             if let loginVC = segue.destination as? LoginViewController{
                 loginVC.apiController = apiController
+            }
+        } else if segue.identifier == "ShowAnimalDetail" {
+            if let detailVC = segue.destination as? AnimalDetailViewController,
+                let indexPath = tableView.indexPathForSelectedRow {
+                detailVC.apiController = apiController
+                detailVC.animalName = self.animalNames[indexPath.row]
+                
             }
         }
     }

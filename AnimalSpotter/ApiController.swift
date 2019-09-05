@@ -13,14 +13,16 @@ enum HTTPMethod: String{
     case put = "PUT"
     case post = "POST"
     case delete = "DELETE"
+    
 }
 
 enum NetworkError: Error{
     case ecodingError
     case responseError
-    case otherError
+    case otherError(Error)
     case noData
     case noDecode
+    case noToken
 }
 
 //Model Controller. Model Controllers are always classes
@@ -64,7 +66,7 @@ class APIController {
             
             if let error = error{
                 NSLog("Error Creating User on Server: \(error)")
-                completion(.otherError)
+                completion(.otherError(error))
                 return
             }
             completion(nil)
@@ -114,7 +116,7 @@ class APIController {
             //Handle Errors
             if let error = error {
                 NSLog("Error \(error)")
-                completion(.otherError)
+                completion(.otherError(error))
                 return
             }
             
@@ -134,6 +136,109 @@ class APIController {
             completion(nil)
             
             }.resume()
+    }
+                                        //Enum type(Result = String else Error)
+    func getAllAnimalNames(completion: @escaping (Result<[String], NetworkError>) -> Void) {
+        
+        guard let bearer = bearer else {
+            completion(.failure(.noToken))
+            return
+        }
+        
+        let requestURL = baseURL.appendingPathComponent("animals")
+            .appendingPathComponent("all")
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        request.setValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request){(data,response,error) in
+            
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                completion(.failure(.responseError))
+                return
+            }
+            
+            if let error = error {
+                NSLog("Error getting animal names: \(error)")
+                completion(.failure(.otherError(error)))
+                return
+            }
+            
+            
+            guard let data = data else{
+                completion(.failure(.noData))
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            
+            do {
+                let animalNames = try decoder.decode([String].self, from: data)
+                completion(.success(animalNames))
+            } catch {
+                NSLog("Error decoding animals name: \(error)")
+                completion(.failure(.noDecode))
+                return
+                
+                
+            }
+            
+        }.resume()
+    }
+    
+    func getAnimal(with name: String, completion: @escaping (Result<Animal, NetworkError>) -> Void) {
+        
+        guard let bearer = bearer else {
+            completion(.failure(.noToken))
+            return
+        }
+        
+        let requestURL = baseURL.appendingPathComponent("animals")
+            .appendingPathComponent(name)
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        request.setValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request){(data,response,error) in
+            
+            if let response = response as? HTTPURLResponse,
+                response.statusCode != 200 {
+                completion(.failure(.responseError))
+                return
+            }
+            
+            if let error = error {
+                NSLog("Error getting animal details: \(error)")
+                completion(.failure(.otherError(error)))
+                return
+            }
+            
+            
+            guard let data = data else{
+                completion(.failure(.noData))
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            
+            do {
+                let animal = try decoder.decode(Animal.self, from: data)
+                completion(.success(animal))
+            } catch {
+                NSLog("Error decoding animal: \(error)")
+                completion(.failure(.noDecode))
+                return
+                
+                
+            }
+            
+            }.resume()
+        
     }
     
 }

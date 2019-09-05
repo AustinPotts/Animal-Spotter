@@ -11,6 +11,8 @@
 		451F69EF23201E1C00B19E07 /* ApiController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F69EE23201E1C00B19E07 /* ApiController.swift */; };
 		451F69F12320298500B19E07 /* AnimalsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F69F02320298500B19E07 /* AnimalsTableViewController.swift */; };
 		451F69F3232034B300B19E07 /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F69F2232034B300B19E07 /* Bearer.swift */; };
+		451F6A412321725200B19E07 /* AnimalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F6A402321725200B19E07 /* AnimalDetailViewController.swift */; };
+		451F6A432321857700B19E07 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F6A422321857700B19E07 /* Animal.swift */; };
 		462672AE232015080018F085 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462672AD232015080018F085 /* AppDelegate.swift */; };
 		462672B3232015080018F085 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 462672B1232015080018F085 /* Main.storyboard */; };
 		462672B5232015080018F085 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 462672B4232015080018F085 /* Assets.xcassets */; };
@@ -23,6 +25,8 @@
 		451F69EE23201E1C00B19E07 /* ApiController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiController.swift; sourceTree = "<group>"; };
 		451F69F02320298500B19E07 /* AnimalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsTableViewController.swift; sourceTree = "<group>"; };
 		451F69F2232034B300B19E07 /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
+		451F6A402321725200B19E07 /* AnimalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalDetailViewController.swift; sourceTree = "<group>"; };
+		451F6A422321857700B19E07 /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		462672AA232015080018F085 /* AnimalSpotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimalSpotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		462672AD232015080018F085 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		462672B2232015080018F085 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -46,6 +50,8 @@
 		462672A1232015080018F085 = {
 			isa = PBXGroup;
 			children = (
+				451F6A422321857700B19E07 /* Animal.swift */,
+				451F6A402321725200B19E07 /* AnimalDetailViewController.swift */,
 				451F69F2232034B300B19E07 /* Bearer.swift */,
 				451F69F02320298500B19E07 /* AnimalsTableViewController.swift */,
 				451F69EE23201E1C00B19E07 /* ApiController.swift */,
@@ -148,10 +154,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				451F69EF23201E1C00B19E07 /* ApiController.swift in Sources */,
+				451F6A432321857700B19E07 /* Animal.swift in Sources */,
 				451F69F12320298500B19E07 /* AnimalsTableViewController.swift in Sources */,
 				451F69F3232034B300B19E07 /* Bearer.swift in Sources */,
 				462672C0232015360018F085 /* LoginViewController.swift in Sources */,
 				462672AE232015080018F085 /* AppDelegate.swift in Sources */,
+				451F6A412321725200B19E07 /* AnimalDetailViewController.swift in Sources */,
 				451F69ED23201CE400B19E07 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
